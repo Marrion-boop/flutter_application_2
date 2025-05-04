@@ -26,6 +26,9 @@ class _MainPageState extends State<MainPage> {
     StartCamera(0);
     super.initState();
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,6 +56,30 @@ class _MainPageState extends State<MainPage> {
             }
           },
              ),
+
+           Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 80,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Chat Logs', style: TextStyle(fontSize: 18)),
+                  Text('Speak', style: TextStyle(fontSize: 18)),
+                  Text('Account', style: TextStyle(fontSize: 18)),
+                ],
+              ),
+            ),
+          ),
+
+
+
           SafeArea(child: 
           Align(alignment: Alignment.topRight,
           child: Padding(padding: EdgeInsets.only(right: 5, top: 10),
@@ -90,4 +117,6 @@ class _MainPageState extends State<MainPage> {
       )
     );
   }
+  
+
 }
