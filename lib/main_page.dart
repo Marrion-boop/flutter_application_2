@@ -41,8 +41,8 @@ class _MainPageState extends State<MainPage> {
  @override
 Widget build(BuildContext context) {
   final size = MediaQuery.of(context).size;
-
   return Scaffold(
+    
     body: PageView(
       controller: _pageController,
   onPageChanged: (index) {
@@ -50,6 +50,7 @@ Widget build(BuildContext context) {
       _selectedIndex = index;
     });
   },
+      
       children: [
         Stack(
           children: [
@@ -108,13 +109,39 @@ Widget build(BuildContext context) {
                 ),
               ),
             ),
+            const SafeArea(
+              bottom: true,
+              left: false,
+              top: false,
+              right: false,
+              child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: FloatingActionButton(
+                  backgroundColor: Color.fromRGBO(255, 255, 255, .7),
+                  shape: CircleBorder(), 
+                onPressed: null,
+                child: Icon(Icons.camera_alt, size: 40, color: Colors.black87,),
+                ),
+                ),
+                ),
+              ],
+            ),
+            )
+            
           ],
         ),
 
         ChatLogs(),
         Accountpage(),
       ],
+      
+      
     ), 
+    
     bottomNavigationBar: BottomNavigationBar(
   currentIndex: _selectedIndex,
   onTap: (index) {
@@ -130,6 +157,7 @@ Widget build(BuildContext context) {
     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
   ],
 ),
+
   );
 }
 
