@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 // ignore: unused_import
 import 'package:flutter/gestures.dart';
@@ -7,6 +9,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_application_2/pages/AccountPage.dart';
 import 'package:flutter_application_2/pages/ChatLogs.dart';
 import 'package:gap/gap.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+
+// ...
+
+
 
 class MainPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -17,6 +26,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool _isRecording = false;
+  String filePath = '';
   late CameraController cameraController;
   late Future<void> cameraValue;
   bool isFlashOn = false; 
@@ -36,6 +47,26 @@ class _MainPageState extends State<MainPage> {
     _pageController = PageController(initialPage: 0);
   }
 
+ Future<void> _startRecording() async {
+    final directory = await getTemporaryDirectory();
+    final filePath = join(directory.path, '${DateTime.now()}.mp4');
+    await cameraController.startVideoRecording();
+    setState(() => _isRecording = true);
+  }
+
+  Future<void> _stopRecording() async {
+    final file = await cameraController.stopVideoRecording();
+    setState(() => _isRecording = false);
+    print('Video recorded to: ${file.path}');
+  }
+
+  
+
+
+
+
+
+  
 
 
  @override
@@ -109,7 +140,7 @@ Widget build(BuildContext context) {
                 ),
               ),
             ),
-            const SafeArea(
+            SafeArea(
               bottom: true,
               left: false,
               top: false,
@@ -119,12 +150,12 @@ Widget build(BuildContext context) {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: FloatingActionButton(
-                  backgroundColor: Color.fromRGBO(255, 255, 255, .7),
-                  shape: CircleBorder(), 
-                onPressed: null,
-                child: Icon(Icons.camera_alt, size: 40, color: Colors.black87,),
+                  backgroundColor: const Color.fromRGBO(255, 255, 255, .7),
+                  shape: const CircleBorder(), 
+                onPressed: _isRecording ? _stopRecording : _startRecording,
+                child: _isRecording ? Icon(Icons.stop, size: 40, color: Colors.black87,): Icon(Icons.play_arrow, size: 40, color: Colors.black87,),
                 ),
                 ),
                 ),
@@ -150,7 +181,7 @@ Widget build(BuildContext context) {
     });
     _pageController.jumpToPage(index);
   },
-  items: [
+  items: const [
     
     BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Camera'),
     BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat Logs'),

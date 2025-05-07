@@ -12,6 +12,10 @@ dependencies:
   camera: ^0.10.5+9
   gap: ^3.0.1
   media_scanner: ^2.1.0
+  path_provider: ^2.1.2
+  path: ^1.8.3
+
+
 
 dev_dependencies:
   flutter_test:
